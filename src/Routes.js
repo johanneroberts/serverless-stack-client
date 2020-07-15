@@ -22,10 +22,10 @@ export default function Routes() {
         <Signup />
       </UnauthenticatedRoute>
       <AuthenticatedRoute exact path="/jobcards/new">
-        <NewNote />
+        <NewJob />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/jobcards/:id">
-        <Notes />
+        <Jobcards />
       </AuthenticatedRoute>
       <Route>
         <NotFound />
