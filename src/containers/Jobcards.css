@@ -1,0 +1,14 @@
+.Jobs form {
+    padding-bottom: 15px;
+  }
+
+.form-group,
+.form-group label,
+.form-group input {
+    float:left;
+    display:inline;
+   }
+
+.form-group { margin-right:5px }
+
+.form-group label { line-height:--px; }
