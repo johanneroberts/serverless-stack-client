@@ -69,7 +69,7 @@ export default function Home() {
   function renderLander() {
     return (
       <div className="lander">
-        <h1>Scratch</h1>
+        <h1>Job Cards</h1>
         <p>A simple Job Card app</p>
         <div>
           <Link to="/login" className="btn btn-info btn-lg">
