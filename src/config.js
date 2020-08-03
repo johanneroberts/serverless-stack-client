@@ -1,20 +1,7 @@
 const dev = {
   apiGateway: {
     REGION: "eu-west-1",
-    URL: "https://xth4fap4mk.execute-api.eu-west-1.amazonaws.com/dev"
-  },
-  cognito: {
-    REGION: "eu-west-1",
-    USER_POOL_ID: "eu-west-1_n2ARcsCaW",
-    APP_CLIENT_ID: "2iun50kd9mm5shv50ubm3d97r",
-    IDENTITY_POOL_ID: "2iun50kd9mm5shv50ubm3d97r"
-  }
-};
-
-const prod = {
-  apiGateway: {
-    REGION: "eu-west-1",
-    URL: "https://ki1nq8zxgc.execute-api.eu-west-1.amazonaws.com/prod"
+    URL: "https://w2ujrzzulh.execute-api.eu-west-1.amazonaws.com/dev"
   },
   cognito: {
     REGION: "eu-west-1",
@@ -24,10 +11,23 @@ const prod = {
   }
 };
 
+const prod = {
+  apiGateway: {
+    REGION: "eu-west-1",
+    URL: "https://00ddi513dl.execute-api.eu-west-1.amazonaws.com/prod"
+  },
+  cognito: {
+    REGION: "eu-west-1",
+    USER_POOL_ID: "eu-west-1_1iteabsuQ",
+    APP_CLIENT_ID: "sg4233qqbrdbb4v2ukvlnse9v",
+    IDENTITY_POOL_ID: "eu-west-1:cd95d90b-f899-407a-9df1-e8f2c3be2838"
+  }
+};
+
 // Default to dev if not set
 const config = process.env.REACT_APP_STAGE === 'prod'
   ? prod
-  : dev;
+  : prod;
 
 export default {
   ...config

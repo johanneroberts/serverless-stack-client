@@ -7,7 +7,7 @@ import Routes from "./Routes";
 import "./App.css";
 import { Auth } from "aws-amplify";
 import { onError } from "./libs/errorLib";
-
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   const history = useHistory();
@@ -39,7 +39,7 @@ function App() {
   }
 
   return (
-    !isAuthenticating &&
+    !isAuthenticating && (
       <div className="App container">
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
@@ -50,27 +50,37 @@ function App() {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              {isAuthenticated
-                ? <NavItem onClick={handleLogout}>Logout</NavItem>
-                : <>
-                    <LinkContainer to="/signup">
-                      <NavItem>Signup</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/login">
-                      <NavItem>Login</NavItem>
-                    </LinkContainer>
-                  </>
-              }
+              {isAuthenticated ? (
+                <>
+                  <LinkContainer to="/settings">
+                    <NavItem>Settings</NavItem>
+                  </LinkContainer>
+                  <NavItem onClick={handleLogout}>Logout</NavItem>
+                </>
+              ) : (
+                <>
+                  <LinkContainer to="/settings">
+                    <NavItem>Settings</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/signup">
+                    <NavItem>Signup</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/login">
+                    <NavItem>Login</NavItem>
+                  </LinkContainer>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <AppContext.Provider
-          value={{ isAuthenticated, userHasAuthenticated }}
-        >
-          <Routes />
-        </AppContext.Provider>
+        <ErrorBoundary>
+          <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+            <Routes />
+          </AppContext.Provider>
+        </ErrorBoundary>
       </div>
-    );
+    )
+  );
 }
 
 export default App;
