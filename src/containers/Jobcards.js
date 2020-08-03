@@ -12,10 +12,18 @@ export default function Jobcards() {
   const [job, setJob] = useState(null);
   const [job_id, setJob_id] = useState("");
   const [job_location, setJob_location] = useState("");
+
+  const [job_suburb, setJob_suburb] = useState("");
+  const [job_town, setJob_town] = useState("");
+  const [job_cfc, setJob_cfc] = useState("");
+  const [job_ffc, setJob_ffc] = useState("");
+  const [job_fault_date, setJob_fault_date] = useState("");
+
   const [job_plumber, setJob_plumber] = useState("");
   const [job_status, setJob_status] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
   useEffect(() => {
     function loadJob() {
       return API.get("jobcards", `/jobcards/${id}`);
@@ -25,9 +33,22 @@ export default function Jobcards() {
       try {
 
         const job = await loadJob();
-        const { job_id, job_location, job_plumber, job_status } = job;
+        const { job_id,
+                job_location,
+                job_suburb,
+                job_town,
+                job_cfc,
+                job_ffc,
+                job_fault_date,
+                job_plumber,
+                job_status } = job;
         setJob_id(job_id);
         setJob_location(job_location);
+        setJob_suburb(job_suburb);
+        setJob_town(job_town);
+        setJob_cfc(job_cfc)
+        setJob_ffc(job_ffc);
+        setJob_fault_date(job_fault_date);
         setJob_plumber(job_plumber);
         setJob_status(job_status);
         setJob(job);
@@ -59,6 +80,11 @@ export default function Jobcards() {
       await saveJob({
         job_id:job_id || job.job_id,
         job_location: job_location || job.job_location,
+        job_suburn: job_suburb || job.suburb,
+        job_town: job_town || job.job_town,
+        job_cfc: job_cfc || job.job_cfc,
+        job_ffc: job_ffc || job.job_ffc,
+        job_fault_date: job_fault_date || job.job_fault_date,
         job_plumber:job_plumber || job.job_plumber,
         job_status:job_status || job.job_status
       });
@@ -113,6 +139,36 @@ export default function Jobcards() {
               type="text"
               onChange={e => setJob_location(e.target.value)}
             />
+            <ControlLabel>Job Suburb</ControlLabel>
+            <FormControl
+              value={job_suburb}
+              type="text"
+              onChange={e => setJob_suburb(e.target.value)}
+            />
+            <ControlLabel>Job Town</ControlLabel>
+            <FormControl
+              value={job_town}
+              type="text"
+              onChange={e => setJob_town(e.target.value)}
+            />
+            <ControlLabel>Job CFC</ControlLabel>
+            <FormControl
+              value={job_cfc}
+              type="text"
+              onChange={e => setJob_cfc(e.target.value)}
+            />
+            <ControlLabel>Job ffc</ControlLabel>
+            <FormControl
+              value={job_ffc}
+              type="text"
+              onChange={e => setJob_ffc(e.target.value)}
+            />
+            <ControlLabel>Job Fault Date</ControlLabel>
+            <FormControl
+              value={job_fault_date}
+              type="date"
+              onChange={e => setJob_fault_date(e.target.value)}
+            />
             <ControlLabel>Job Plumber</ControlLabel>
             <FormControl
               value={job_plumber}
@@ -126,7 +182,6 @@ export default function Jobcards() {
               onChange={e => setJob_status(e.target.value)}
             />
           </FormGroup>
-
           <LoaderButton
             block
             type="submit"

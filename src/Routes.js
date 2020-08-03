@@ -30,9 +30,9 @@ export default function Routes() {
       <UnauthenticatedRoute exact path="/signup">
         <Signup />
       </UnauthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings">
+      <Route exact path="/settings">
         <Settings />
-      </AuthenticatedRoute>
+      </Route>
       <AuthenticatedRoute exact path="/settings/email">
         <ChangeEmail />
       </AuthenticatedRoute>

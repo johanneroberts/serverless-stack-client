@@ -16,6 +16,9 @@ import "./Signup.css";
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
     email: "",
+    name: "",
+    family_name: "",
+    is_plumber: false,
     password: "",
     confirmPassword: "",
     confirmationCode: "",
@@ -37,15 +40,24 @@ export default function Signup() {
     return fields.confirmationCode.length > 0;
   }
 
+  function set_is_plumber_checked(event) {
+    return fields.is_plumber = event.target.checked;
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
-
     setIsLoading(true);
 
     try {
       const newUser = await Auth.signUp({
         username: fields.email,
         password: fields.password,
+        attributes: {
+          email: fields.email,
+          name: fields.name,
+          family_name: fields.family_name,
+          'custom:is_plumber': fields.is_plumber === true ? 'true' : 'false'
+        }
       });
       setIsLoading(false);
       setNewUser(newUser);
@@ -108,6 +120,33 @@ export default function Signup() {
             type="email"
             value={fields.email}
             onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="name" bsSize="large">
+          <ControlLabel>First Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.name}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="family_name" bsSize="large">
+          <ControlLabel>Last Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.family_name}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="is_plumber">
+          <ControlLabel>Plumber</ControlLabel>
+          <FormControl
+            autoFocus
+            type="checkbox"
+            value={fields.is_plumber}
+            onChange={set_is_plumber_checked}
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">

@@ -5,10 +5,51 @@ import { onError } from "../libs/errorLib";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
+import BootstrapTable from 'react-bootstrap-table-next';
+import { useHistory } from "react-router-dom";
 import "./Home.css";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
+const columns = [{
+  dataField: 'job_id',
+  text: 'Job ID',
+  align: 'left'
+}, {
+  dataField: 'job_location',
+  text: 'Job Location',
+  align: 'left'
+}, {
+  dataField: 'job_suburb',
+  text: 'Job Suburb',
+  align: 'left'
+}, {
+  dataField: 'job_town',
+  text: 'Job Town',
+  align: 'left'
+}, {
+  dataField: 'job_cfc',
+  text: 'Job CFC',
+  align: 'left'
+}, {
+  dataField: 'job_ffc',
+  text: 'Job FFC',
+  align: 'left'
+}, {
+  dataField: 'job_fault_date',
+  text: 'Job Fault Date',
+  align: 'left'
+}, {
+  dataField: 'job_plumber',
+  text: 'Job Plumber',
+  align: 'left'
+}, {
+  dataField: 'job_status',
+  text: 'Job Status',
+  align: 'left'
+}];
 
 export default function Home() {
+  const history = useHistory();
   const [jobs, setJobs] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
@@ -36,25 +77,14 @@ export default function Home() {
   }
 
   function renderJobsList(jobs) {
-    return [{}].concat(jobs).map((job, i) =>
-      i !== 0 ? (
-        <LinkContainer key={job.job_id} to={`/jobcards/${job.job_id}`}>
-          <ListGroup>
-            <ListGroupItem header="Job ID">
-              {job.job_id}
-            </ListGroupItem>
-            <ListGroupItem header="Job Location">
-              {job.job_location}
-            </ListGroupItem>
-            <ListGroupItem header="Job Pluber">
-              {job.job_plumber}
-            </ListGroupItem>
-            <ListGroupItem header="Job Status">
-              {job.job_status}
-            </ListGroupItem>
-          </ListGroup>
-        </LinkContainer>
-      ) : (
+    const rowEvents = {
+      onClick: (e, row, rowIndex) => {
+        history.push(`/jobcards/${row.job_id}`);
+      }
+    };
+
+    return (
+      <div>
         <LinkContainer key="new" to="/jobcards/new">
           <ListGroupItem>
             <h4>
@@ -62,8 +92,9 @@ export default function Home() {
             </h4>
           </ListGroupItem>
         </LinkContainer>
-      )
-    );
+        <BootstrapTable keyField='job_id' data={ jobs } columns={ columns } striped={true} hover={true} search={true} rowEvents={ rowEvents } />
+      </div>
+    )
   }
 
   function renderLander() {
